@@ -17,7 +17,7 @@
         padding: 20px 50px; background: rgba(0,0,0,0.8);
         position: fixed; width: 100%; top: 0; box-sizing: border-box; z-index: 1000;
     }
-    .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; max-width: 450px; }
+    .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; max-width: 380px; }
     .logo img {
         max-width: 100%; height: auto;
     }
@@ -123,4 +123,89 @@
     color: #000;
     border: none;
     cursor: pointer;
+}
+
+/* News section */
+.news-list {
+    max-width: 800px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 30px;
+    text-align: left;
+}
+.news-card h3 { margin-top: 0; }
+.news-date {
+    color: #888; font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 1px; margin: 0 0 10px;
+}
+
+/* Playable prototypes */
+.section-intro { color: #aaa; font-size: 1.1rem; margin: -30px auto 50px; max-width: 700px; }
+.games-grid { max-width: 1000px; grid-template-columns: 1fr; gap: 50px; }
+.game-card { padding: 0 0 30px; overflow: hidden; }
+.game-card h3, .game-card p, .game-card .game-link { padding: 0 30px; }
+.game-card p { max-width: 760px; margin-left: auto; margin-right: auto; }
+.game-thumb {
+    position: relative; display: block; width: 100%;
+    padding: 0; border: 0; background: #000; cursor: pointer; margin-bottom: 25px;
+}
+.game-thumb img { width: 100%; height: auto; display: block; transition: 0.3s; }
+.game-thumb:hover img { opacity: 0.75; }
+.play-btn {
+    margin: 10px 0 15px; padding: 12px 32px; background: transparent;
+    color: var(--accent-color); border: 2px solid var(--accent-color);
+    font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    font-size: 1rem; cursor: pointer; transition: 0.3s;
+}
+.play-btn:hover { background: var(--accent-color); color: var(--bg-dark); }
+.game-link { display: inline-block; color: #888; font-size: 0.85rem; text-decoration: none; }
+.game-link:hover { color: var(--accent-color); }
+.games-note { color: #666; font-size: 0.85rem; margin-top: 30px; }
+
+.game-overlay {
+    position: fixed; inset: 0; z-index: 2000; background: #000;
+    display: flex; flex-direction: column;
+}
+.game-overlay[hidden] { display: none; }
+.game-overlay-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 20px; background: #111; border-bottom: 1px solid #333;
+    color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+}
+.game-overlay-bar button {
+    background: none; border: 1px solid #555; color: #fff; padding: 6px 16px;
+    cursor: pointer; font-size: 0.9rem; text-transform: uppercase;
+}
+.game-overlay-bar button:hover { border-color: var(--accent-color); color: var(--accent-color); }
+/* keeps the game at exactly 16:9, centred, so it lines up with the 16:9 preview image */
+.game-stage { flex: 1; display: flex; align-items: center; justify-content: center; background: #000; min-height: 0; }
+.game-box {
+    position: relative; aspect-ratio: 16 / 9;
+    width: min(100vw, calc((100vh - 52px) * 16 / 9));
+}
+#game-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.game-cover {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    cursor: pointer; opacity: 1; transition: opacity 1s ease;
+}
+.game-cover.hidden { opacity: 0; pointer-events: none; }
+
+/* Mobile menu */
+.menu-toggle {
+    display: none; background: none; border: 1px solid #555; color: #fff;
+    font-size: 1.4rem; line-height: 1; padding: 6px 12px; cursor: pointer;
+}
+@media (max-width: 900px) {
+    header { padding: 15px 20px; }
+    .logo { max-width: 220px; }
+    .menu-toggle { display: block; }
+    header nav {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(0,0,0,0.95); border-top: 1px solid #222;
+        flex-direction: column; padding: 10px 0;
+    }
+    header nav.open { display: flex; }
+    header nav a { margin: 0; padding: 14px 20px; font-size: 1rem; }
+    .hero h1 { font-size: 2.4rem; }
+    .hero p { font-size: 1.1rem; }
+    .section { padding: 80px 20px; }
+    .multiplier-banner h2 { font-size: 2rem; }
 }

@@ -9,12 +9,15 @@
 <body>
 
 <header>
-    <div class="logo"><img src="assets/css/img/logo.png" alt="PortalScope Studios"></div>
+    <div class="logo"><img src="assets/css/img/logo-white.png" alt="PortalScope Studios"></div>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
     <nav>
+        <a href="#play">Play</a>
         <a href="#vision">The Vision</a>
         <a href="#tech">Technology</a>
         <a href="#slate">Content Slate</a>
         <a href="#team">Team</a>
+        <a href="#news">News</a>
     </nav>
 </header>
 
@@ -32,6 +35,50 @@
 <div class="multiplier-banner">
     <h2>30 Seconds of Film = 30 Minutes of Gameplay</h2>
     <p>Maximising Asset Value. Expanding Narrative Beats.</p>
+</div>
+
+<!-- PLAYABLE PROTOTYPES: each card opens its game full-screen when clicked -->
+<div id="play" class="section">
+    <h2>Play Our Prototypes</h2>
+    <p class="section-intro">Real places, captured with Gaussian splatting and running live in your browser.</p>
+    <div class="grid games-grid">
+        <div class="card game-card">
+            <button class="game-thumb" data-game="https://playcanv.as/p/BHT0kwCx/" data-cover="assets/img/games/the-corridors.jpg" data-title="The Corridors">
+                <img src="assets/img/games/the-corridors.jpg" alt="The Corridors - a grinning creature leaping down a long hallway" loading="lazy">
+            </button>
+            <h3>The Corridors</h3>
+            <p>Our goal was to test the limits of Gaussian Splatting by transforming a large-scale volumetric scan into an instant, playable browser horror experience. It pairs the dread of navigating an authentic maze with real-time stealth mechanics, proving radiance fields are ready for interactive web gaming.</p>
+            <button class="play-btn" data-game="https://playcanv.as/p/BHT0kwCx/" data-cover="assets/img/games/the-corridors.jpg" data-title="The Corridors">&#9654; Play now</button>
+            <br>
+            <a class="game-link" href="https://playcanv.as/p/BHT0kwCx/" target="_blank" rel="noopener">Open in new tab &#8599;</a>
+        </div>
+        <div class="card game-card">
+            <button class="game-thumb" data-game="https://playcanv.as/b/1e212f46" data-cover="assets/img/games/the-woods.jpg" data-title="The Woods">
+                <img src="assets/img/games/the-woods.jpg" alt="The Woods - a leaf-covered woodland path" loading="lazy">
+            </button>
+            <h3>The Woods</h3>
+            <p>Can clicking a thumbnail feel like instantly stepping through a doorway into another world? By camera-matching our preview image with the opening frame of this woodland Gaussian Splat, we created an instant, seamless bridge between a 2D link and a photorealistic 3D horror space.</p>
+            <button class="play-btn" data-game="https://playcanv.as/b/1e212f46" data-cover="assets/img/games/the-woods.jpg" data-title="The Woods">&#9654; Play now</button>
+            <br>
+            <a class="game-link" href="https://playcanv.as/b/1e212f46" target="_blank" rel="noopener">Open in new tab &#8599;</a>
+        </div>
+    </div>
+    <p class="games-note">Best played on a desktop or laptop. Large 3D scenes may take a moment to load.</p>
+</div>
+
+<!-- Full-screen game player (hidden until a game is chosen) -->
+<div id="game-overlay" class="game-overlay" hidden>
+    <div class="game-overlay-bar">
+        <span id="game-overlay-title"></span>
+        <button id="game-overlay-close" aria-label="Close game">&times; Close</button>
+    </div>
+    <div class="game-stage">
+        <div class="game-box">
+            <iframe id="game-frame" title="Game" allow="autoplay; fullscreen; xr-spatial-tracking; gamepad" allowfullscreen></iframe>
+            <!-- preview image shown over the game while it loads, then faded away -->
+            <img id="game-cover" class="game-cover" alt="">
+        </div>
+    </div>
 </div>
 
 <div id="vision" class="section">
@@ -107,10 +154,84 @@
     </div>
 </div>
 
+<!-- NEWS: add new posts at the top of this list (newest first) -->
+<div id="news" class="section">
+    <h2>Latest News</h2>
+    <div class="news-list">
+        <article class="card news-card">
+            <p class="news-date">19 October 2026</p>
+            <h3>Welcome to Our News Page</h3>
+            <p>We've added a news section to the PortalScope Studios website. Check back here for updates on our volumetric media pipeline, progress on The RackaJack, The Sweet Man and Bubblegum Monsters, and behind-the-scenes looks at our work.</p>
+        </article>
+    </div>
+</div>
+
 <footer>
     <p>&copy; 2026 PortalScope Studios Ltd. All Rights Reserved.</p>
     <p>Enquire about platform service fees and external IP hosting: Peter@PortalScopeStudios.com</p>
 </footer>
+
+<script>
+    // How long (in seconds) to keep the preview image over the game after it starts loading.
+    // Increase this if the PlayCanvas loading screen still flashes; decrease it if the wait feels long.
+    var GAME_COVER_SECONDS = 4;
+
+    // Opens a game full-screen when its card is clicked, and unloads it on close
+    (function () {
+        var overlay = document.getElementById('game-overlay');
+        var frame = document.getElementById('game-frame');
+        var cover = document.getElementById('game-cover');
+        var title = document.getElementById('game-overlay-title');
+        var timer = null;
+
+        function reveal() {
+            clearTimeout(timer);
+            cover.classList.add('hidden');
+        }
+        function close() {
+            clearTimeout(timer);
+            overlay.hidden = true;
+            frame.onload = null;
+            frame.src = 'about:blank';
+            document.body.style.overflow = '';
+        }
+        document.querySelectorAll('[data-game]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                title.textContent = btn.dataset.title;
+                cover.src = btn.dataset.cover;
+                cover.classList.remove('hidden');
+                frame.onload = function () {
+                    if (frame.src === 'about:blank') return;
+                    timer = setTimeout(reveal, GAME_COVER_SECONDS * 1000);
+                };
+                frame.src = btn.dataset.game;
+                overlay.hidden = false;
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        cover.addEventListener('click', reveal); // clicking the image reveals the game straight away
+        document.getElementById('game-overlay-close').addEventListener('click', close);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+    })();
+
+    // Mobile menu: the button toggles the menu, and choosing a link closes it
+    (function () {
+        var btn = document.querySelector('.menu-toggle');
+        var nav = document.querySelector('header nav');
+        btn.addEventListener('click', function () {
+            var open = nav.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+            btn.innerHTML = open ? '&times;' : '&#9776;';
+        });
+        nav.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+                nav.classList.remove('open');
+                btn.setAttribute('aria-expanded', false);
+                btn.innerHTML = '&#9776;';
+            });
+        });
+    })();
+</script>
 
 </body>
 </html>
