@@ -1,0 +1,126 @@
+
+    :root {
+        --bg-dark: #050505;
+        --text-light: #f4f4f4;
+        --accent-color: #00e5ff; /* A tech-focused neon cyan */
+        --card-bg: #111111;
+    }
+    body, html {
+        margin: 0; padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+    header {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 20px 50px; background: rgba(0,0,0,0.8);
+        position: fixed; width: 100%; top: 0; box-sizing: border-box; z-index: 1000;
+    }
+    .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; max-width: 450px; }
+    .logo img {
+        max-width: 100%; height: auto;
+    }
+    nav a {
+        color: var(--text-light); text-decoration: none;
+        margin-left: 30px; font-size: 0.9rem; text-transform: uppercase;
+    }
+    nav a:hover { color: var(--accent-color); }
+    
+    .hero {
+        height: 100vh; display: flex; flex-direction: column;
+        justify-content: center; align-items: center; text-align: center;
+        background: linear-gradient(to bottom, #1a1a2e, var(--bg-dark));
+        padding: 0 20px;
+    }
+    .hero h1 { font-size: 4rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.5rem; max-width: 800px; color: #aaaaaa; }
+    .cta-btn {
+        margin-top: 30px; padding: 15px 40px; font-size: 1.1rem;
+        background-color: transparent; color: var(--accent-color);
+        border: 2px solid var(--accent-color); cursor: pointer;
+        text-transform: uppercase; font-weight: bold; transition: 0.3s;
+    }
+    .cta-btn:hover { background-color: var(--accent-color); color: var(--bg-dark); }
+
+    .section { padding: 100px 50px; text-align: center; }
+    .section h2 { font-size: 2.5rem; margin-bottom: 50px; }
+    
+    .grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px; max-width: 1200px; margin: 0 auto;
+    }
+    .card {
+        background-color: var(--card-bg); padding: 40px 30px;
+        border-top: 3px solid #333; transition: 0.3s;
+    }
+    .card:hover { border-top-color: var(--accent-color); transform: translateY(-5px); }
+    .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent-color); }
+    
+    .multiplier-banner {
+        background-color: var(--card-bg); padding: 60px 20px; text-align: center;
+        border-top: 1px solid #333; border-bottom: 1px solid #333;
+    }
+    .multiplier-banner h2 { font-size: 3rem; margin: 0; color: #fff; }
+    .multiplier-banner p { font-size: 1.2rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px;}
+    
+    footer {
+        background-color: #000; padding: 40px; text-align: center;
+        font-size: 0.8rem; color: #666; border-top: 1px solid #222;
+    }
+
+
+
+    /* quick styles for the video element */
+    .hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+/* Video background */
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Content sits above video */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Optional overlay for readability */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* adjust darkness */
+    z-index: 1;
+}
+
+/* Button styling (optional) */
+.cta-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: #fff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+}
